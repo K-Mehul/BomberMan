@@ -1,2 +1,7 @@
 # BomberMan
- Bomberman Game  A classic multiplayer action game where strategy meets explosive fun! Bomberman lets players control a character who places bombs to destroy obstacles and opponents. The goal? Outlast your enemies by outsmarting and outmaneuvering them in an ever-shrinking battlefield.  Features:  Multiplayer: Play with friends locally or online.  Power-ups: Collect various items to enhance your bombs or speed.  Dynamic Maps: Procedurally generated levels for endless replayability.  Classic Mode: Stick to the traditional gameplay, or customize your own rules.  Destruction: Blast through walls and foes to clear your path and win.  Responsive Controls: Smooth and intuitive controls for fast-paced gameplay.  Technologies Used:  Game Engine: [Unity/Unreal Engine/etc.]  Networking: [Photon, Mirror, etc.]  Programming Languages: [C#, JavaScript, etc.]  Feel free to clone, contribute, or customize this project to create your own explosive adventure. Let’s bomb our way to victory!
+> Bomberman Game  A classic multiplayer action game where strategy meets explosive fun! Bomberman lets players control a character who places bombs to destroy obstacles and opponents. 
+
+ - **Topics**: Local Co-op, Tilemaps, Multiplayer
+- **Version**: Unity 2022.3.20f1 (LTS)
+- [**Download**](https://github.com/K-Mehul/BomberMan/archive/refs/heads/main.zip)
+<!-- - [**Play**](https://mehul-kumar-0.itch.io/minesweeper) -->
