@@ -5,6 +5,13 @@ public class GameManager : MonoBehaviour
 {
     public GameObject[] players;
 
+    public AudioClip levelStartClip;
+
+    private void Start()
+    {
+        AudioSource.PlayClipAtPoint(levelStartClip, transform.position);
+    }
+
     public void CheckWinState()
     {
         int aliveCount = 0;

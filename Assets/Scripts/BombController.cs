@@ -25,8 +25,9 @@ public class BombController : MonoBehaviour
 
     private Coroutine bombCoroutine;
     private WaitForSeconds waitForBombFuse;
-    
 
+    [SerializeField] private AudioClip explodeClip;
+    [SerializeField] private AudioClip placeBombClip;
     private void Awake()
     {
         waitForBombFuse = new WaitForSeconds(bombFuseTime);
@@ -38,8 +39,9 @@ public class BombController : MonoBehaviour
     }
 
     private void OnDisable()
-    {
-        StopCoroutine(bombCoroutine);
+    { 
+        if(bombCoroutine != null)
+            StopCoroutine(bombCoroutine);
     }
 
     private void Update()
@@ -57,6 +59,8 @@ public class BombController : MonoBehaviour
         GameObject bomb = Instantiate(bombPrefab, position, Quaternion.identity);
         bombsRemaining--;
 
+        AudioSource.PlayClipAtPoint(placeBombClip,transform.position);
+
         yield return waitForBombFuse;
 
         position = bomb.transform.position;
@@ -69,7 +73,7 @@ public class BombController : MonoBehaviour
         Explode(position, Vector2.down, explosionRadius);
         Explode(position, Vector2.left, explosionRadius);
         Explode(position, Vector2.right, explosionRadius);
-        
+        AudioSource.PlayClipAtPoint(explodeClip, bomb.transform.position);
         Destroy(bomb);
         bombsRemaining++;
     }
@@ -81,6 +85,7 @@ public class BombController : MonoBehaviour
             return;
         }
 
+
         position += direction;
 
         if (Physics2D.OverlapBox(position, Vector2.one / 2f, 0f, explosionLayerMask))
@@ -90,6 +95,7 @@ public class BombController : MonoBehaviour
         }
 
         Explosion explosion = Instantiate(explosionPrefab, position, Quaternion.identity);
+      
         explosion.SetActiveRenderer(length > 1 ? explosion.middle : explosion.end);
         explosion.SetDirection(direction);
         explosion.DestroyAfter(explosionDuration);

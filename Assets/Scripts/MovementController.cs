@@ -21,6 +21,10 @@ public class MovementController : MonoBehaviour
     [SerializeField] AnimatedSpriteRenderer animatedSpriteRendererRight;
     [SerializeField] AnimatedSpriteRenderer animationSpriteRendererDie;
 
+
+    [SerializeField] private AudioClip walkingSound,deathClip;
+
+    private bool isWalking = false;
     private AnimatedSpriteRenderer activeSpriteRenderer;
     
     private void Awake()
@@ -51,6 +55,8 @@ public class MovementController : MonoBehaviour
         {
             SetDirection(Vector2.zero,activeSpriteRenderer);
         }
+
+        HandleWalkingSound();
     }
 
     private void FixedUpdate()
@@ -58,7 +64,7 @@ public class MovementController : MonoBehaviour
         Vector2 position = rigidbody.position;
         Vector2 translation = direction * speed * Time.fixedDeltaTime;
 
-        rigidbody.MovePosition(position + translation);
+        rigidbody.MovePosition(position + translation);    
     }
 
     private void SetDirection(Vector2 newDirection, AnimatedSpriteRenderer spriteRenderer)
@@ -88,6 +94,7 @@ public class MovementController : MonoBehaviour
 
     private void DeathSequence()
     {
+        AudioSource.PlayClipAtPoint(deathClip, transform.position, 1);
         enabled = false;
         GetComponent<BombController>().enabled = false;
 
@@ -100,9 +107,24 @@ public class MovementController : MonoBehaviour
         Invoke(nameof(OnDeathSequenceEnded), 1.25f);
     }
 
+    private void HandleWalkingSound()
+    {
+        bool currentlyWalking = direction != Vector2.zero;
+        if (currentlyWalking && !isWalking)
+        {
+            isWalking = true;
+            AudioSource.PlayClipAtPoint(walkingSound, transform.position,1f);
+        }
+        else if (!currentlyWalking && isWalking)
+        {
+            isWalking = false;
+        }
+    }
+
+
     private void OnDeathSequenceEnded()
     {
         gameObject.SetActive(false);
-        //FindObjectOfType<GameManager>().CheckWinState();
+        FindObjectOfType<GameManager>().CheckWinState();
     }
 }
